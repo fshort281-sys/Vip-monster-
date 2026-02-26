@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monsatar · dark developer realm</title>
+    <!-- Font Awesome for crisp icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fira Code', 'Courier New', monospace;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #0b0f1e, #03050a);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.2rem;
+            color: #b0f0e6;
+        }
+
+        /* glitch / cyber effect container */
+        .monsatar-wrap {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* header with glitch name */
+        .cyber-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .cyber-header h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: #1affd0;
+            text-shadow: 0 0 5px #00ffc3, 0 0 15px #00ccaa, 4px 4px 0 #0e1e2f;
+            animation: flicker 3s infinite alternate;
+        }
+
+        .cyber-header h1 span {
+            color: #ff3860;
+            text-shadow: 0 0 8px #ff3860, -2px -2px 0 #1200b3;
+            font-style: italic;
+        }
+
+        .sub {
+            font-size: 1.1rem;
+            color: #88d9e6;
+            border-bottom: 1px dashed #2c5366;
+            padding-bottom: 0.8rem;
+            margin-top: -0.8rem;
+            word-spacing: 6px;
+        }
+
+        .sub i {
+            color: #8a2be2;
+            margin: 0 8px;
+        }
+
+        /* panel grid — login section + promo */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr;
+            gap: 1.8rem;
+            background: rgba(12, 20, 28, 0.7);
+            backdrop-filter: blur(3px);
+            border: 1px solid #2a4b5c;
+            box-shadow: 0 0 30px #0e3b48 inset, 0 0 20px #00b8a070;
+            padding: 2rem;
+            border-radius: 32px;
+            margin-bottom: 2rem;
+        }
+
+        /* login card - exact credentials */
+        .login-vault {
+            background: #0b141cb3;
+            border: 2px solid #2b6975;
+            border-radius: 24px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 0 30px #00c3b070;
+            transition: 0.3s;
+        }
+
+        .login-vault:hover {
+            border-color: #58e6d9;
+            box-shadow: 0 0 50px #1affd0;
+        }
+
+        .vault-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            color: #b3ffe6;
+            border-bottom: 2px solid #21a69a;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .vault-title i {
+            color: #ffb86b;
+            font-size: 2rem;
+        }
+
+        .credential-group {
+            margin: 2rem 0 2.2rem 0;
+        }
+
+        .cred-row {
+            background: #081e26;
+            border-left: 6px solid #35d0c0;
+            padding: 1.1rem 1.5rem;
+            margin: 1.2rem 0;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 1.3rem;
+            box-shadow: 0 6px 0 #031013;
+        }
+
+        .cred-row i {
+            font-size: 2rem;
+            width: 36px;
+            color: #d4ffb0;
+        }
+
+        .cred-row .tag {
+            color: #a0f2e0;
+            font-weight: 200;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cred-row .value {
+            color: #f7fe9e;
+            font-weight: 700;
+            background: #002a33;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #1fd9c0;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 5px cyan;
+        }
+
+        .warning-note {
+            color: #e689b6;
+            font-size: 0.95rem;
+            border-top: 1px dashed #487078;
+            padding-top: 1.2rem;
+            text-align: center;
+        }
+
+        /* right side – promo & web developer hacker vibe */
+        .promo-zone {
+            display: flex;
+            flex-direction: column;
+            gap: 1.8rem;
+        }
+
+        .feature-card {
+            background: #0c1920d9;
+            border-radius: 20px;
+            padding: 1.4rem 2rem;
+            border: 1px solid #1e9490;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            background: #0a232e;
+            border-color: #bbfff0;
+            transform: translateY(-3px);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #b0f5ea;
+        }
+
+        .feature-header i {
+            color: #f25e9c;
+            font-size: 2.2rem;
+            filter: drop-shadow(0 0 5px magenta);
+        }
+
+        .feature-desc {
+            color: #d0ece5;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            padding-left: 0.5rem;
+            border-left: 3px solid #36d6c0;
+            padding: 0.6rem 1rem;
+            background: #011116;
+            border-radius: 14px;
+        }
+
+        .feature-desc i {
+            color: #ffb86b;
+            margin-right: 8px;
+        }
+
+        .skill-badge {
+            display: inline-block;
+            background: #142b33;
+            border-radius: 30px;
+            padding: 0.3rem 1.2rem;
+            margin: 0.2rem 0.2rem;
+            border: 1px solid #23b5aa;
+            font-weight: 600;
+            color: #baffe6;
+            font-size: 0.9rem;
+        }
+
+        .cta-terminal {
+            background: #051016;
+            border-radius: 18px;
+            padding: 1.6rem;
+            border: 1px solid #14bdaf;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cta-terminal .prompt {
+            color: #b2ff9e;
+            font-size: 1.2rem;
+        }
+
+        .cta-terminal .prompt i {
+            color: #34e0c0;
+            margin-right: 12px;
+        }
+
+        .glitch-btn {
+            background: transparent;
+            border: 2px solid #8afff0;
+            color: #b3fff0;
+            padding: 0.8rem 2.2rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            border-radius: 60px;
+            cursor: default;
+            text-shadow: 0 0 8px cyan;
+            box-shadow: 0 0 18px #00ffc3;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .glitch-btn:hover {
+            background: #008b7f40;
+            border-color: #fbffa3;
+            color: #ffffc0;
+        }
+
+        /* bottom grid: web dev + hacking */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.4rem;
+            margin: 1.5rem 0;
+        }
+
+        .skill-tile {
+            background: #0d212b;
+            border-radius: 22px;
+            padding: 1.4rem 0.5rem;
+            text-align: center;
+            border: 1px solid #30857b;
+            transition: 0.2s;
+        }
+
+        .skill-tile i {
+            font-size: 2.3rem;
+            color: #f8a65c;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-tile span {
+            display: block;
+            color: #cbffee;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        .skill-tile:hover {
+            background: #143b48;
+            border-color: aquamarine;
+            box-shadow: 0 0 28px #51ffe3;
+        }
+
+        /* footer */
+        .monsatar-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #528a92;
+            border-top: 1px solid #1a515c;
+            padding-top: 1.8rem;
+            width: 100%;
+        }
+
+        .monsatar-footer a {
+            color: #7ff5e6;
+            text-decoration: none;
+            border-bottom: 1px dotted;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 1; text-shadow: 0 0 5px #00ffc3, 0 0 15px #00ccaa, 4px 4px 0 #0e1e2f; }
+            25% { opacity: 0.9; text-shadow: -2px -2px 0 #ff0080, 2px 2px 0 cyan; }
+            50% { opacity: 1; text-shadow: 0 0 20px magenta, 2px 2px 0 yellow; }
+            75% { opacity: 0.95; text-shadow: 0 0 5px #00ffc3, 0 0 25px red; }
+            100% { opacity: 1; text-shadow: 0 0 8px #00ffe0, 0 0 30px #003cff, 4px 4px 0 #1a1830; }
+        }
+
+        /* responsive */
+        @media (max-width: 800px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .cyber-header h1 { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="monsatar-wrap">
+        <!-- header with name -->
+        <div class="cyber-header">
+            <h1>MON<span>SATAR</span></h1>
+            <div class="sub">
+                <i class="fas fa-skull"></i> silent web developer · exploit engineer · code phantom <i class="fas fa-dragon"></i>
+            </div>
+        </div>
+
+        <!-- main panel: login + promotion -->
+        <div class="dashboard">
+            <!-- left: login vault with exact credentials -->
+            <div class="login-vault">
+                <div class="vault-title">
+                    <i class="fas fa-fingerprint"></i> 
+                    <span>█ ACCESS PORTAL █</span>
+                </div>
+                <div class="credential-group">
+                    <!-- login name: monstar -->
+                    <div class="cred-row">
+                        <i class="fas fa-user-secret"></i>
+                        <span class="tag">login</span>
+                        <span class="value">monstar</span>
+                    </div>
+                    <!-- password: monster12 -->
+                    <div class="cred-row">
+                        <i class="fas fa-key"></i>
+                        <span class="tag">passwd</span>
+                        <span class="value">monster12</span>
+                    </div>
+                </div>
+                <div class="warning-note">
+                    <i class="fas fa-radiation"></i> authorized personnel only — root:monstar <i class="fas fa-radiation"></i>
+                </div>
+                <!-- tiny js interactive (just to show alert with creds) -->
+                <div style="text-align: right; margin-top: 20px;">
+                    <button onclick="alert('🔓 login: monstar · password: monster12')" style="background: none; border: 1px solid #4dbfb0; color: #9affec; padding: 8px 20px; border-radius: 30px; cursor: pointer;"><i class="far fa-eye"></i> verify creds</button>
+                </div>
+            </div>
+
+            <!-- right: promotion zone for web developer / hacker -->
+            <div class="promo-zone">
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <i class="fas fa-terminal"></i>  
+                        <span>#! /bin/developer</span>
+                    </div>
+                    <div class="feature-desc">
+                        <i class="fas fa-angle-right"></i> monsatar isn't just a name — it's a backdoor to creative code. 
+                        full-stack developer with <strong>dark aesthetic</strong> & offensive mindset.
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-header">
+                        <i class="fas fa-code-branch"></i>  
+                        <span>inject / prompt</span>
+                    </div>
+                    <div class="feature-desc">
+                        <i class="fas fa-bolt"></i>  HTML · CSS · JavaScript · Python · PHP · SQLmap · metasploit style · 
+                        <span class="skill-badge">XSS</span>
+                        <span class="skill-badge">CSRF</span>
+                        <span class="skill-badge">RCE</span>
+                        <span class="skill-badge">buffer overflow</span>
+                        <span class="skill-badge">zero-day</span> 
+                        (conceptual demos / ethical)
+                    </div>
+                </div>
+
+                <!-- skill tiles (hacking + web) -->
+                <div class="skill-grid">
+                    <div class="skill-tile">
+                        <i class="fas fa-globe"></i>
+                        <span>web app pentest</span>
+                    </div>
+                    <div class="skill-tile">
+                        <i class="fas fa-shield-halbed"></i>
+                        <span>reverse shell lab</span>
+                    </div>
+                    <div class="skill-tile">
+                        <i class="fas fa-dragon"></i>
+                        <span>monstarlang</span>
+                    </div>
+                    <div class="skill-tile">
+                        <i class="fas fa-cloud"></i>
+                        <span>server hijack</span>
+                    </div>
+                    <div class="skill-tile">
+                        <i class="fas fa-binary"></i>
+                        <span>binary exfilt</span>
+                    </div>
+                    <div class="skill-tile">
+                        <i class="fas fa-robot"></i>
+                        <span>AI prompt break</span>
+                    </div>
+                </div>
+
+                <!-- call to action / promo message -->
+                <div class="cta-terminal">
+                    <span class="prompt"><i class="fas fa-skull"></i> [monsatar@darkweb]─$ <span style="color:#b0f2e3;">./deploy --skill</span></span>
+                    <span class="glitch-btn">root@monsatar:~/ #</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- additional web developer & hacking details -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: space-between; background: #05181fb0; border-radius: 30px; padding: 2rem; border: 1px solid #1c8180; backdrop-filter: blur(2px);">
+            <div style="flex: 1; min-width: 200px;">
+                <i class="fas fa-hashtag" style="color: #00ffb3;"></i>
+                <h3 style="color:#e7ffb0; margin: 10px 0;">◉  MONSATAR  ◉</h3>
+                <p style="color:#bbe6e6; ">craft code like exploit, design like infiltration. from pixel-perfect frontend to shell access — monsatar brings the monstrous creativity.</p>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+                <i class="fas fa-bug" style="color: #fe7292;"></i>
+                <h4 style="color: #b1f0fc; margin: 8px 0;">specialties</h4>
+                <ul style="color: #b6e2db; list-style-type: none;">
+                    <li><i class="fas fa-play"></i>  hidden service design</li>
+                    <li><i class="fas fa-play"></i>  anonymized dev ops</li>
+                    <li><i class="fas fa-play"></i>  cryptographish UI</li>
+                    <li><i class="fas fa-play"></i>  kernel module mockup</li>
+                </ul>
+            </div>
+            <div style="flex: 1; min-width: 180px;">
+                <i class="fas fa-envelope-open-text" style="color: #50f5e2;"></i>
+                <p style="color: #cef7f0; margin-top: 8px;"><i class="fas fa-fingerprint"></i>  PGP: 0xMONSTER12  <br> <i class="fas fa-circle-nodes"></i>  irc.monsatar.hack</p>
+                <div style="margin-top: 10px; background: #0b202a; border-radius: 20px; padding: 10px; text-align: center; border:1px solid cyan;">
+                    <span style="color:#9fffe4;">"monstar:monster12"</span> 
+                </div>
+            </div>
+        </div>
+
+        <!-- footer echo -->
+        <div class="monsatar-footer">
+            <i class="fas fa-crown"></i> MONSATAR – where web development meets hacking aesthetics ·  <a href="#">#monstar</a>  ·  <a href="#">#monster12</a>  ·  <i class="fas fa-dragon"></i>
+        </div>
+    </div>
+
+    <!-- tiny js for extra interactivity: console welcome -->
+    <script>
+        (function() {
+            // stylish console log with credentials (name + pass)
+            console.log("%c🔥 MONSATAR :: ACCESS GRANTED", "background: #0b2b35; color: #92ffdb; font-size: 16px; padding: 6px; border-radius: 8px;");
+            console.log("%c Login : %cmonstar", "color: #7aa3a6", "color: #ffffb0; font-weight: bold; font-size: 1.2em");
+            console.log("%c Passwd: %cmonster12", "color: #7aa3a6", "color: #ffb0f0; font-weight: bold; font-size: 1.2em");
+            console.log("%c ⚡ use them wisely ⚡", "color: #58e6d9; font-style: italic");
+        })();
+    </script>
+    <!-- extra harmless click effect -->
+</body>
+</html>
