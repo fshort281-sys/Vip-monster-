@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP MONSTER • CYBER CORE</title>
+    <!-- Font Awesome for icons (optional but adds style) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background: #0b0f1c;
+            color: #00ffc3;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Matrix-like background animation (subtle) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, 
+                rgba(0, 255, 200, 0.02) 0px, 
+                rgba(0, 0, 0, 0.5) 2px, 
+                transparent 3px);
+            pointer-events: none;
+            z-index: 0;
+            animation: scan 8s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 20px; }
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(10, 20, 30, 0.85);
+            backdrop-filter: blur(5px);
+            border: 2px solid #0f0;
+            box-shadow: 0 0 30px #0f0, inset 0 0 10px #0f0;
+            padding: 2rem;
+            border-radius: 20px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+            border-style: solid;
+            border-color: #00ffc3 #004d40 #004d40 #00ffc3;
+        }
+
+        /* glitch effect for headings */
+        .glitch {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #0f0;
+            text-shadow: -2px -2px 0 #ff00c1, 2px 2px 0 #00fff9;
+            animation: glitch-anim 3s infinite alternate;
+            letter-spacing: 6px;
+            margin-bottom: 0.2rem;
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: skew(0deg, 0deg); opacity: 1; text-shadow: -2px -2px 0 #ff00c1, 2px 2px 0 #00fff9; }
+            25% { transform: skew(2deg, 1deg); text-shadow: -3px -1px 0 #ff00c1, 3px 1px 0 #00fff9; }
+            50% { transform: skew(-2deg, -1deg); text-shadow: 2px 2px 0 #ff00c1, -2px -2px 0 #00fff9; }
+            75% { transform: skew(1deg, 2deg); text-shadow: 4px 0px 0 #ff00c1, -4px 0px 0 #00fff9; }
+            100% { transform: skew(0deg, 0deg); text-shadow: -2px -2px 0 #ff00c1, 2px 2px 0 #00fff9; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #bbffbb;
+            text-align: center;
+            border-bottom: 1px dashed #0f0;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .subtitle span {
+            background: #0a1a1a;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 8px cyan;
+        }
+
+        .info-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: rgba(0, 10, 5, 0.7);
+            border: 1px solid #0f0;
+            padding: 1.2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(2px);
+            transition: 0.2s;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .card:hover {
+            box-shadow: 0 0 25px #0f0;
+            border-color: #fff;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            color: #9eff9e;
+            margin-bottom: 1rem;
+            border-left: 5px solid #0f0;
+            padding-left: 10px;
+        }
+
+        .member-badge {
+            background: #001a1a;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            border: 2px solid #0f0;
+            color: #ccffcc;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 8px #0f0;
+            letter-spacing: 4px;
+        }
+
+        .service-list {
+            list-style: none;
+        }
+
+        .service-list li {
+            margin: 0.7rem 0;
+            border-bottom: 1px dotted #0f0;
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .service-list i {
+            width: 25px;
+            color: #ffd700;
+        }
+
+        /* Lockdown status */
+        .lockdown {
+            background: #030f0f;
+            border: 3px solid red;
+            box-shadow: 0 0 25px red, inset 0 0 15px red;
+            color: #ffaaaa;
+            padding: 1.5rem;
+            border-radius: 30px;
+            margin: 2rem 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .lockdown-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0 10px;
+        }
+
+        .lock-item {
+            background: black;
+            border: 1px solid red;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ff8080;
+            box-shadow: 0 0 10px red;
+        }
+
+        .critical {
+            font-size: 1.6rem;
+            background: #1a0000;
+            padding: 15px;
+            border-radius: 50px;
+            margin: 15px 0;
+            border: 2px solid #ff4444;
+            animation: blinkRed 1s infinite;
+        }
+
+        @keyframes blinkRed {
+            0% { border-color: red; text-shadow: 0 0 5px red; }
+            50% { border-color: #ff8888; text-shadow: 0 0 20px #ff4444; }
+            100% { border-color: red; text-shadow: 0 0 5px red; }
+        }
+
+        .reverse-trace {
+            background: #003300;
+            color: #00ffaa;
+            font-size: 1.8rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; box-shadow: 0 0 50px #0f0; }
+            100% { opacity: 1; }
+        }
+
+        /* chat box */
+        .chat-box {
+            background: #021010;
+            border: 2px solid #0f0;
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            color: #0f0;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            height: 150px;
+            overflow-y: auto;
+            background: #051515;
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #0a5f5f;
+        }
+
+        .chat-messages div {
+            padding: 5px 10px;
+            border-radius: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .incoming {
+            background: #1a3a3a;
+            align-self: flex-start;
+            border: 1px solid #0f0;
+        }
+
+        .outgoing {
+            background: #004d4d;
+            align-self: flex-end;
+            border: 1px solid #bbffbb;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            background: #0f1f1f;
+            border: 1px solid #0f0;
+            padding: 12px;
+            border-radius: 40px;
+            color: #0f0;
+            outline: none;
+        }
+
+        .chat-input-area button {
+            background: black;
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-weight: bold;
+            padding: 0 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .chat-input-area button:hover {
+            background: #0f0;
+            color: black;
+            box-shadow: 0 0 20px #0f0;
+        }
+
+        .download-area {
+            background: #001111;
+            border: 2px solid #0f0;
+            border-radius: 60px;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 1.8rem 0;
+        }
+
+        .download-link {
+            background: #0f0;
+            color: #000;
+            padding: 12px 35px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.4rem;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 35px #0f0;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .download-link:hover {
+            background: #ffffff;
+            border-color: #0f0;
+            color: #000;
+            box-shadow: 0 0 70px cyan;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1rem;
+            color: #0f0;
+            opacity: 0.7;
+            border-top: 1px dashed #0f0;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER with name & email -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+            <div>
+                <div class="glitch">VIP MONSTER</div>
+                <div style="font-size: 1.4rem; letter-spacing: 2px; background: #000c0c; padding: 0 10px;">
+                    <i class="fas fa-envelope" style="color: #0f0;"></i> hakarnikiya@gmail.com
+                </div>
+            </div>
+            <div class="member-badge">
+                <i class="fas fa-skull"></i> CYBER MONSTER <i class="fas fa-skull"></i>
+            </div>
+        </div>
+
+        <!-- About / team line -->
+        <div class="subtitle">
+            <span><i class="fas fa-users"></i> TEAM OF GOD OF SERVER</span>
+            <span><i class="fas fa-user-secret"></i> ¥.MEMBER OF CYBER MONSTER</span>
+        </div>
+
+        <!-- Two column layout: left SERVICES / right LOCKDOWN etc -->
+        <div class="info-panel">
+            <!-- Left: service list with animations -->
+            <div class="card">
+                <h3><i class="fas fa-bolt"></i> • CORE ENGINES •</h3>
+                <ul class="service-list" id="serviceAnim">
+                    <li><i class="fas fa-eye"></i> CHECK FOR LIVE SYSTEM..</li>
+                    <li><i class="fas fa-search"></i> PORT SCANNING..</li>
+                    <li><i class="fas fa-cog"></i> SERVICE DETECTION..</li>
+                    <li><i class="fas fa-server"></i> OS DETECTION..</li>
+                    <li><i class="fas fa-shield-alt"></i> NSE..</li>
+                    <li><i class="fas fa-bomb"></i> DDOS ATTACK..</li>
+                    <li><i class="fab fa-whatsapp"></i> WHATSAPP VIEWS/LIKE/COMMENTS/FAV..</li>
+                    <li><i class="fas fa-mobile-alt"></i> APP CREATOR CREATOR..</li>
+                    <li><i class="fas fa-camera"></i> CAM HACKING..</li>
+                    <li><i class="fas fa-map-marker-alt"></i> LOCATION TRACKING..</li>
+                </ul>
+                <div style="font-size: 1.5rem; text-align: center; color: #ffaa00; margin-top: 10px;">
+                    《 CYBER HACKING LOCK • CORE ENGINE 》
+                </div>
+            </div>
+
+            <!-- Right: DARK PROTECTION SYSTEM + lockdown -->
+            <div class="card" style="background: #030f0f;">
+                <h3 style="color: #ff8888;"><i class="fas fa-lock"></i> DARK PROTECTION SYSTEM</h3>
+                <div style="font-family: monospace; font-size: 1rem; background: #000; padding: 15px; border-radius: 15px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <span>> ROOT ACCESS</span><span style="color: #ff5555;">: PERMANENTLY LOCKED 🔒</span>
+                        <span>> SYSTEM GATE</span><span style="color: #ffaa00;">: SEALED</span>
+                        <span>> BIOS LAYER</span><span>: CLOSED</span>
+                        <span>> TERMLINK</span><span>: DISCONNECTED</span>
+                        <span>> KEY OVERRIDE</span><span>: INVALID</span>
+                        <span>> IDENTITY SCAN</span><span style="color: #ff5555;">: FAILED ❌</span>
+                        <span>> REAL-TIME MONITOR</span><span style="color: #00ffaa;">: ACTIVE 🔥</span>
+                    </div>
+                </div>
+                <div class="lockdown">
+                    ⚠ FINAL CRITICAL MESSAGE ⚠<br>
+                    THIS DEVICE IS UNDER CYBER LOCKDOWN…<br>
+                    ALL BYPASS KEYS INVALID… ALL ENTRY POINTS BLOCKED…
+                </div>
+                <div class="reverse-trace">
+                    <i class="fas fa-location-arrow"></i> REVERSE TRACE  ➤ ONLINE 🔁  <br>
+                    INTRUDER LOCATION TRACKING… STATUS : RUNNING ⚡
+                </div>
+            </div>
+        </div>
+
+        <!-- bottom lockdown summary with lock items animated -->
+        <div class="lockdown-grid">
+            <span class="lock-item"><i class="fas fa-lock"></i> ROOT: LOCKED</span>
+            <span class="lock-item"><i class="fas fa-ban"></i> GATE: SEALED</span>
+            <span class="lock-item"><i class="fas fa-microchip"></i> BIOS: CLOSED</span>
+            <span class="lock-item"><i class="fas fa-plug"></i> TERMLINK: DOWN</span>
+            <span class="lock-item"><i class="fas fa-key"></i> OVERRIDE: INVALID</span>
+            <span class="lock-item"><i class="fas fa-user-slash"></i> IDENTITY: FAIL</span>
+            <span class="lock-item"><i class="fas fa-satellite-dish"></i> MONITOR: ACTIVE</span>
+        </div>
+        <div style="text-align: center; font-size: 2rem; background: #000; padding: 5px; letter-spacing: 6px;">
+            《 CYBER HACKING LOCKDOWN COMPLETE 》
+        </div>
+
+        <!-- DOWNLOAD BLOCK (WhatsApp hacking tools) -->
+        <div class="download-area">
+            <span style="font-size: 1.7rem; display: flex; gap: 12px;"><i class="fab fa-whatsapp" style="color: #25D366;"></i> <i class="fas fa-download"></i> WHATSAPP HACKING TOOLS</span>
+            <a href="https://www.mediafire.com/file/9fqxlc8qo17ytfm/HAKING_NIKIYA_TOOLS_1.0.apk/file" target="_blank" class="download-link">
+                <i class="fas fa-bolt"></i> DOWNLOAD .APK <i class="fas fa-skull"></i>
+            </a>
+        </div>
+
+        <!-- LIVE CHAT BOX -->
+        <div class="chat-box">
+            <div class="chat-header">
+                <span><i class="fas fa-comment-dots"></i> LIVE CHAT • SECURE CHANNEL [ENCRYPTED]</span>
+                <span style="color: #0f0;">● ONLINE</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="incoming">SYSTEM: Welcome to VIP MONSTER core chat.</div>
+                <div class="incoming">MONITOR: 3 intruders detected. Reverse tracking active.</div>
+                <div class="outgoing">user: check permission?</div>
+                <div class="incoming">ACCESS: Root chat allowed.</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Type your message..." />
+                <button id="sendBtn"><i class="fas fa-paper-plane"></i> SEND</button>
+                <button id="hackReplyBtn" style="background: #330000; border-color: red;"><i class="fas fa-bug"></i></button>
+            </div>
+        </div>
+
+        <!-- Footer with credits -->
+        <div class="footer">
+            <i class="fas fa-crown"></i> VIP MONSTER • GOD OF SERVER • CYBER MONSTER © 2025 <br>
+            * All animations simulated for educational demonstration *
+        </div>
+    </div>
+
+    <!-- JavaScript for chat, plus some hacking-like animations -->
+    <script>
+        (function() {
+            // Live chat functionality
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const hackBtn = document.getElementById('hackReplyBtn');
+
+            function addMessage(text, isOutgoing = true) {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add(isOutgoing ? 'outgoing' : 'incoming');
+                msgDiv.textContent = text;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', function() {
+                const msg = chatInput.value.trim();
+                if (msg === '') return;
+                addMessage(msg, true);
+                chatInput.value = '';
+
+                // Auto-reply from "system" after short delay (hacking style)
+                setTimeout(() => {
+                    addMessage('SYSTEM: message received. tracking origin...', false);
+                }, 800);
+                setTimeout(() => {
+                    addMessage('CORE: access level ' + Math.floor(Math.random()*5) + ' granted.', false);
+                }, 1600);
+            });
+
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendBtn.click();
+            });
+
+            hackBtn.addEventListener('click', function() {
+                addMessage('⚠ INTRUDER COMMAND: DDoS simulation // PORTS SCANNING', false);
+                setTimeout(() => {
+                    addMessage('🔥 FIREWALL BREACH ATTEMPT #' + Math.floor(Math.random()*1000), false);
+                }, 600);
+            });
+
+            // extra hacking animation: service list blinking
+            const serviceItems = document.querySelectorAll('#serviceAnim li');
+            setInterval(() => {
+                serviceItems.forEach((item, index) => {
+                    if (Math.random() > 0.7) {
+                        item.style.color = '#ffffaa';
+                        item.style.textShadow = '0 0 8px yellow';
+                    } else {
+                        item.style.color = '#00ffc3';
+                        item.style.textShadow = 'none';
+                    }
+                });
+            }, 500);
+
+            // random glitch for lockdown items
+            const lockItems = document.querySelectorAll('.lock-item');
+            setInterval(() => {
+                lockItems.forEach(item => {
+                    if (Math.random() > 0.8) {
+                        item.style.borderColor = '#00ff00';
+                        item.style.boxShadow = '0 0 20px #00ff00';
+                    } else {
+                        item.style.borderColor = 'red';
+                        item.style.boxShadow = '0 0 10px red';
+                    }
+                });
+            }, 700);
+
+            // simulate reverse trace pulse
+            const traceEl = document.querySelector('.reverse-trace');
+            setInterval(() => {
+                if (traceEl) {
+                    traceEl.style.transform = 'scale(1.02)';
+                    setTimeout(() => traceEl.style.transform = 'scale(1)', 100);
+                }
+            }, 2000);
+
+            // Add initial "live" hacking messages
+            setTimeout(() => {
+                addMessage('CORE: location tracking activated // 12.345, -98.760', false);
+            }, 2000);
+        })();
+    </script>
+    <!-- ensure icons work with fallback -->
+    <noscript><p style="color:red">JavaScript not enabled: chat and animations limited.</p></noscript>
+</body>
+</html>
