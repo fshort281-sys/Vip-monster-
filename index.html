@@ -3,557 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIP MONSTER • CYBER LOCKDOWN</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Dream Frontend ✨</title>
     <style>
+        /* ========== GLOBAL STYLES ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #0b0f1c;
-            color: #00ffc3;
+            /* 1. ලස්සන පට (Gradient Background) */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* glitch / scanlines overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, rgba(0,255,0,0.03) 0px, rgba(0,0,0,0.5) 1px, transparent 2px);
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        /* flicker animation */
-        @keyframes flicker {
-            0% { opacity: 1; text-shadow: 0 0 5px #0ff; }
-            50% { opacity: 0.9; text-shadow: 0 0 15px cyan; }
-            100% { opacity: 1; text-shadow: 0 0 5px #0ff; }
-        }
-
-        /* typing cursor */
-        .cursor {
-            background: #00ffc3;
-            display: inline-block;
-            width: 10px;
-            height: 1.2em;
-            margin-left: 5px;
-            animation: blink 1s infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        /* Background එකේ පාට වෙනස් වෙන හැටි */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
+            width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
-            border: 2px solid #00ffc3;
-            padding: 20px;
-            box-shadow: 0 0 25px #00ffc388;
-            background: rgba(10, 20, 30, 0.7);
-            backdrop-filter: blur(2px);
-            position: relative;
-            z-index: 2;
-        }
-
-        /* header / title */
-        .vip-header {
-            text-align: center;
-            border-bottom: 2px dashed #00ffc3;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-        .vip-header h1 {
-            font-size: 3rem;
-            letter-spacing: 8px;
-            color: #ffffff;
-            text-shadow: 0 0 10px cyan, 0 0 20px blue;
-            animation: flicker 3s infinite;
-        }
-        .vip-header h1 span {
-            color: #ff0055;
-            text-shadow: 0 0 15px red;
-        }
-        .vip-header .team {
-            font-size: 1.3rem;
-            background: #000000aa;
-            display: inline-block;
-            padding: 5px 25px;
-            margin-top: 8px;
-            border: 1px solid #00ffc3;
-        }
-
-        /* contact & email row */
-        .contact-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            background: #00000055;
-            padding: 15px;
-            border: 1px solid cyan;
-            margin-bottom: 30px;
-            font-size: 1.2rem;
-        }
-        .contact-row i {
-            margin-right: 8px;
-            color: #ff66aa;
-        }
-        .email-glow {
-            color: #ffcc00;
-            background: #0a0a0a;
-            padding: 5px 10px;
-            border-radius: 0;
-            border-left: 5px solid #00ffc3;
-            word-break: break-all;
-        }
-
-        /* about / member */
-        .about-card {
-            background: #030712;
-            padding: 15px 20px;
-            border: 2px solid #00b8ff;
-            box-shadow: inset 0 0 20px #0000ff30, 0 0 20px #0ff;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        .about-card p {
-            margin: 6px 0;
-            font-size: 1.2rem;
-        }
-        .god-of-server {
-            color: #ff5555;
-            font-size: 1.6rem;
-            text-decoration: underline wavy #00ffc3;
-        }
-
-        /* grid for service list (hacking items) */
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 15px;
-            margin: 30px 0;
-        }
-        .service-item {
-            background: #111a22;
-            border: 1px solid #0ff;
-            padding: 12px 18px;
-            font-size: 1.15rem;
-            box-shadow: 2px 2px 0px #0ff;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .service-item i {
-            font-size: 1.7rem;
-            width: 35px;
-            color: #ff00d0;
-        }
-        .service-item:hover {
-            background: #1f2b38;
-            transform: scale(1.01);
-            border-color: magenta;
-            box-shadow: 0 0 20px magenta;
-        }
-
-        /* lockdown panel */
-        .lockdown-panel {
-            background: #0a0c14;
-            border: 4px solid #ff1100;
-            padding: 25px;
-            margin: 35px 0;
-            box-shadow: 0 0 40px red, inset 0 0 20px #ff0000;
-            color: #ffffff;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        .lockdown-panel h2 {
-            color: #ff4d4d;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px red;
-        }
-        .lock-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .lock-item {
-            border-bottom: 1px dashed #00ffc3;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
-        }
-        .lock-status {
-            color: #ff4444;
-            font-weight: 900;
-            letter-spacing: 2px;
-        }
-        .lock-status.green {
-            color: #00ff88;
-        }
-
-        /* final critical message */
-        .critical-msg {
-            background: black;
-            border: 3px double red;
-            padding: 20px;
-            margin: 30px 0;
-            font-size: 1.3rem;
-            line-height: 2;
-            text-align: center;
-            animation: flicker 1.5s infinite;
-        }
-        .critical-msg i {
-            color: cyan;
-            margin: 0 5px;
-        }
-
-        /* download area */
-        .download-section {
-            background: #0f172a;
-            border: 2px solid #ffaa33;
-            padding: 20px;
-            margin: 30px 0;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .download-link {
-            background: #000;
-            color: #ffaa00;
-            padding: 12px 25px;
-            font-size: 1.3rem;
-            border: 2px solid cyan;
-            text-decoration: none;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .download-link:hover {
-            background: cyan;
-            color: black;
-            border-color: red;
-            box-shadow: 0 0 30px white;
-        }
-
-        /* live chat box */
-        .chat-box {
-            background: #021016;
-            border: 4px solid #00ffea;
-            padding: 0;
-            margin: 40px 0 20px;
-        }
-        .chat-header {
-            background: #005f6b;
-            padding: 12px 20px;
-            font-size: 1.7rem;
-            letter-spacing: 3px;
-            border-bottom: 2px solid cyan;
-            color: black;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .chat-messages {
-            height: 180px;
-            overflow-y: auto;
-            padding: 15px;
-            background: #01070c;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            padding: 40px 20px;
+            /* පිටිපස්ස පෙන්නන්න විනිවිද පෙනෙන කාඩ් එකක් */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
-        .chat-msg {
-            background: #0f2620;
-            padding: 6px 12px;
-            border-left: 6px solid cyan;
-            width: fit-content;
-            max-width: 80%;
-            word-break: break-word;
-            color: #bbffdd;
-            border-radius: 0 12px 12px 0;
-            animation: slideIn 0.2s ease;
-        }
-        .chat-msg.system {
-            border-left-color: red;
-            color: #ffa07a;
-            font-style: italic;
-        }
-        .chat-msg.you {
-            align-self: flex-end;
-            border-left: none;
-            border-right: 6px solid yellow;
-            background: #1a2c3a;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .chat-input-area {
+
+        /* ========== 2. ලස්සන LOGO එක (Animation එකත් එක්ක) ========== */
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
             display: flex;
-            border-top: 2px solid cyan;
-        }
-        .chat-input-area input {
-            flex: 1;
-            background: black;
-            border: none;
-            padding: 15px;
-            color: cyan;
-            font-size: 1rem;
-            outline: none;
-        }
-        .chat-input-area button {
-            background: #00ffc3;
-            border: none;
-            padding: 0 25px;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
             font-weight: bold;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.2s;
-            color: black;
-        }
-        .chat-input-area button:hover {
-            background: magenta;
             color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 3px solid rgba(255,255,255,0.5);
+            
+            /* ඇනිමේෂන් එක - සෙමින් පාවෙලා එනවා */
+            animation: logoAppear 1.5s ease-out, float 4s ease-in-out infinite 1.5s;
         }
 
-        /* footer / lockdown complete */
-        .footer-lock {
+        /* Logo එක පේන්න එන හැටි */
+        @keyframes logoAppear {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-180deg);
+            }
+            70% {
+                transform: scale(1.1) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* Logo එක නිතරම පාවෙලා වගේ ඉන්න */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* ========== 3. මකුරෙක් දුවන CARD එක ========== */
+        .card-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .magic-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden; /* මේක නිසා "මකුරා" card එක ඇතුලෙන් පෙන්නෙන්නේ */
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+        }
+
+        .magic-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* පින්තූරය කාඩ් එකට හරියටම ගැලපෙනවා */
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .magic-card:hover img {
+            transform: scale(1.1); /* hover වෙද්දී පින්තූරය ලොකු වෙනවා */
+        }
+
+        /* ========== මකුරා (The "Macro" Runner) ========== */
+        .runner-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            /* ප්‍රධාන border එක නොපෙනී */
+            border: 3px solid transparent; 
+            /* මේක තමයි මායාව */
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            padding: 3px; /* border එකේ thickness එක */
+            pointer-events: none; /* mouse events වලට බාධා නොකරන්න */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Card එකට hover කරද්දී "මකුරා" පේන්න ගන්නවා */
+        .magic-card:hover + .runner-border,
+        .card-container:hover .runner-border {
+            opacity: 1;
+        }
+
+        /* මකුරා දුවන animation එක */
+        .runner-border::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg, 
+                transparent, 
+                #ff6b6b, 
+                #feca57, 
+                #48dbfb, 
+                #1dd1a1, 
+                transparent 70%
+            );
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ========== 4. LOGIN BUTTON එක සහ POPUP එක ========== */
+        .login-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            background: #f1f1f1;
+        }
+
+        /* Popup Modal එක */
+        .modal {
+            display: none; /* මුලින් හංගලා තියෙනවා */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
             text-align: center;
-            font-size: 1.6rem;
-            border-top: 3px solid #ff00aa;
-            padding: 20px;
-            margin-top: 25px;
-            color: #00ffb3;
-            text-shadow: 0 0 20px blue;
+            position: relative;
+            animation: modalPop 0.4s ease;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.2);
         }
 
-        /* small animations */
-        .blink-hard {
-            animation: blink 1.2s step-end infinite;
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
-        .glitch {
-            animation: glitch 1s infinite;
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
         }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .modal-content button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- header with name -->
-        <div class="vip-header">
-            <h1>VIP <span>MONSTER</span></h1>
-            <div class="team">
-                <i class="fas fa-skull"></i> TEAM OF GOD OF SERVER <i class="fas fa-server"></i>
-            </div>
-        </div>
 
-        <!-- contact row with email -->
-        <div class="contact-row">
-            <span><i class="fas fa-envelope"></i> CONTACT:</span>
-            <span class="email-glow"><i class="fas fa-at"></i> hakarnikiya@gmail.com</span>
-            <span><i class="fas fa-bolt"></i> *¥ MEMBER OF CYBER MONSTER *</span>
-        </div>
-
-        <!-- about section -->
-        <div class="about-card">
-            <p class="god-of-server"><i class="fas fa-crown"></i> TEAM OF GOD OF SERVER</p>
-            <p><i class="fas fa-user-secret"></i> ¥.MEMBER OF  CYBER MONSTER</p>
-        </div>
-
-        <!-- hacking services grid (with icons) -->
-        <div class="service-grid">
-            <div class="service-item"><i class="fas fa-eye"></i> CHECK FOR LIVE SYSTEM..</div>
-            <div class="service-item"><i class="fas fa-plug"></i> PORT SCANNING..</div>
-            <div class="service-item"><i class="fas fa-cogs"></i> SERVICE DETECTION..</div>
-            <div class="service-item"><i class="fas fa-microchip"></i> OS DETECTION..</div>
-            <div class="service-item"><i class="fas fa-code"></i> NSE..</div>
-            <div class="service-item"><i class="fas fa-bolt"></i> DDOS ATTACK..</div>
-            <div class="service-item"><i class="fas fa-thumbs-up"></i> TITOK VIEWS LIKE COMMENTS FAVORITE..</div>
-            <div class="service-item"><i class="fas fa-cube"></i> APP CREATOR..</div>
-            <div class="service-item"><i class="fas fa-camera"></i> CAM HACKING..</div>
-            <div class="service-item"><i class="fas fa-map-marker-alt"></i> LOCATION TRACKING..</div>
-        </div>
-
-        <!-- core engine / lockdown panel -->
-        <div class="lockdown-panel">
-            <h2>《 CYBER HACKING LOCK • CORE ENGINE 》</h2>
-            <div style="text-align:center; color:#0ff; margin-bottom:20px;">DARK PROTECTION SYSTEM</div>
-            <div class="lock-grid">
-                <div class="lock-item"><span>> ROOT ACCESS</span> <span class="lock-status">PERMANENTLY LOCKED 🔒</span></div>
-                <div class="lock-item"><span>> SYSTEM GATE</span> <span class="lock-status">SEALED</span></div>
-                <div class="lock-item"><span>> BIOS LAYER</span> <span class="lock-status">CLOSED</span></div>
-                <div class="lock-item"><span>> TERMLINK</span> <span class="lock-status">DISCONNECTED</span></div>
-                <div class="lock-item"><span>> KEY OVERRIDE</span> <span class="lock-status">INVALID</span></div>
-                <div class="lock-item"><span>> IDENTITY SCAN</span> <span class="lock-status">FAILED ❌</span></div>
-                <div class="lock-item"><span>> REAL-TIME MONITOR</span> <span class="lock-status green">ACTIVE 🔥</span></div>
-            </div>
-        </div>
-
-        <!-- final critical message with tracking -->
-        <div class="critical-msg">
-            ⚠ FINAL CRITICAL MESSAGE ⚠ <br>
-            THIS DEVICE IS UNDER CYBER LOCKDOWN… <br>
-            ALL BYPASS KEYS INVALID… ALL ENTRY POINTS BLOCKED… <br>
-            REVERSE TRACE  ➤ ONLINE 🔁 <br>
-            INTRUDER LOCATION TRACKING… <br>
-            STATUS : <span style="color:#00ff80;">RUNNING ⚡</span>
-        </div>
-
-        <!-- whatsapp hacking tools download -->
-        <div class="download-section">
-            <span style="font-size:1.5rem; color: #ffcc00;"><i class="fab fa-whatsapp"></i> WHATSAPP HACKING TOOLS</span>
-            <a href="https://www.mediafire.com/file/9fqxlc8qo17ytfm/HAKING_NIKIYA_TOOLS_1.0.apk/file" target="_blank" class="download-link">
-                <i class="fas fa-download"></i> DOWNLOAD .APK
-            </a>
-        </div>
-
-        <!-- LIVE CHAT BOX (fully functional) -->
-        <div class="chat-box" id="live-chat">
-            <div class="chat-header">
-                <i class="fas fa-comment-dots"></i> LIVE CHAT [ CYBER MONSTER ] <span class="cursor"></span>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-msg system"><i class="fas fa-robot"></i> SYSTEM: INTRUDER DETECTED. IDENTIFY YOURSELF.</div>
-                <div class="chat-msg system"><i class="fas fa-skull"></i> VIP MONSTER: WE SEE YOU.</div>
-                <div class="chat-msg you"><i class="fas fa-user-secret"></i> you: ?</div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Type your message... (hacker mode)" autocomplete="off">
-                <button id="sendChatBtn"><i class="fas fa-paper-plane"></i> SEND</button>
-            </div>
-        </div>
-
-        <!-- final lockdown complete footer -->
-        <div class="footer-lock">
-            ═══════════════════════ <br>
-            《 CYBER HACKING LOCKDOWN COMPLETE  》 <br>
-            ═══════════════════════
+    <!-- Modal Popup (මුලින් හංගලා) -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2>Welcome Back! 🌟</h2>
+            <input type="text" placeholder="Username" />
+            <input type="password" placeholder="Password" />
+            <button>Login</button>
         </div>
     </div>
 
+    <div class="container">
+        <!-- 1. අපේ ලස්සන LOGO එක -->
+        <div class="logo">✨</div>
+
+        <!-- 2. මකුරෙක් දුවන CARD එක -->
+        <div class="card-container">
+            <div class="magic-card">
+                <!-- මෙතන macro photo එකක් වගේ පින්තූරයක් (Unsplash link එකක්) -->
+                <img src="https://images.unsplash.com/photo-1610878180933-123728745d22?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Macro Photography">
+            </div>
+            <!-- මකුරා (Runner Border) -->
+            <div class="runner-border"></div>
+        </div>
+
+        <!-- 3. LOGIN BUTTON එක -->
+        <button class="login-btn" id="loginBtn">✨ Login Now ✨</button>
+    </div>
+
     <script>
-        (function() {
-            // chat functionality
-            const chatMessages = document.getElementById('chatMessages');
-            const chatInput = document.getElementById('chatInput');
-            const sendBtn = document.getElementById('sendChatBtn');
+        // ========== JAVASCRIPT: Login Popup එක ==========
+        const modal = document.getElementById('loginModal');
+        const loginBtn = document.getElementById('loginBtn');
+        const closeBtn = document.getElementById('closeModal');
 
-            function addMessage(text, isSystem = false, isYou = false) {
-                const msgDiv = document.createElement('div');
-                msgDiv.classList.add('chat-msg');
-                if (isSystem) msgDiv.classList.add('system');
-                else if (isYou) msgDiv.classList.add('you');
-                else msgDiv.classList.add('system'); // default system style for security
+        // Login button click කළාම popup එක පෙන්වන්න
+        loginBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
 
-                // add hacker style
-                if (!isSystem && !isYou) {
-                    // shouldn't happen
-                }
-                const icon = document.createElement('i');
-                if (isSystem) {
-                    icon.className = 'fas fa-terminal';
-                    msgDiv.appendChild(icon);
-                } else if (isYou) {
-                    icon.className = 'fas fa-user-ninja';
-                    msgDiv.appendChild(icon);
-                } else {
-                    icon.className = 'fas fa-robot';
-                    msgDiv.appendChild(icon);
-                }
-                msgDiv.appendChild(document.createTextNode(' ' + text));
-                chatMessages.appendChild(msgDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+        // Close button click කළාම popup එක හංගන්න
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Popup එකෙන් පිටත click කළාමත් හංගන්න
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
+        });
 
-            // predefined "auto" messages for vibe
-            function randomSystemMessage() {
-                const msgs = [
-                    "⚠ INTRUSION TRACE ACTIVE",
-                    "> LOCATION: 12.9716° N, 77.5946° W (spoofed)",
-                    "> CAM ACCESS: ATTEMPT",
-                    "> PORT 22: FILTERED",
-                    "> REVERSE SHELL: BLOCKED",
-                    "> YOUR IP: 10.0.0. (REDACTED)",
-                    "> CYBER MONSTER EYES ONLINE"
-                ];
-                return msgs[Math.floor(Math.random() * msgs.length)];
-            }
-
-            // add system message every 12 seconds (hacking animation)
-            setInterval(() => {
-                addMessage('⚡ ' + randomSystemMessage(), true);
-            }, 12000);
-
-            sendBtn.addEventListener('click', function() {
-                const text = chatInput.value.trim();
-                if (text === '') return;
-                addMessage(text, false, true); // as "you"
-                chatInput.value = '';
-
-                // automated reply after 1 second (makes chat alive)
-                setTimeout(() => {
-                    const lower = text.toLowerCase();
-                    if (lower.includes('who') || lower.includes('你是谁')) {
-                        addMessage('> I AM VIP MONSTER. WE ARE GOD OF SERVER.', true);
-                    } else if (lower.includes('tool') || lower.includes('download')) {
-                        addMessage('> TOOLS READY. USE /download command. or click the link.', true);
-                    } else if (lower.includes('hack') || lower.includes('attack')) {
-                        addMessage('> TARGET LOCKED. DEPLOYING NSE... (just kidding, this is a demo)', true);
-                    } else if (lower.includes('lockdown')) {
-                        addMessage('> LOCKDOWN ACTIVE. BIOMETRIC OVERRIDE REQUIRED.', true);
-                    } else {
-                        addMessage('> COMMAND RECEIVED. SCANNING ...  (no action in demo)', true);
-                    }
-                }, 900);
-            });
-
-            chatInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendBtn.click();
-                }
-            });
-
-            // extra hacking animation: blink some random items in service grid? fine already.
-
-            // simulate additional glitch effect for lockdown (change status text occasionally)
-            const lockItems = document.querySelectorAll('.lock-item .lock-status');
-            setInterval(() => {
-                // sometimes flash one random lock item
-                if (Math.random() > 0.7) {
-                    const randomIndex = Math.floor(Math.random() * lockItems.length);
-                    const originalText = lockItems[randomIndex].innerText;
-                    lockItems[randomIndex].innerText = '⚠ SCANNING ⚠';
-                    setTimeout(() => {
-                        lockItems[randomIndex].innerText = originalText;
-                    }, 300);
-                }
-            }, 4000);
-
-            // title flicker effect (already with css)
-
-            // console fun
-            console.log('%c🔥 VIP MONSTER // CYBER LOCKDOWN 🔥', 'color: #00ffc3; font-size: 16px; font-weight: bold;');
-        })();
+        // Extra touch: ලොගෝ එකට click කළාම සතුටු වෙන්න
+        const logo = document.querySelector('.logo');
+        logo.addEventListener('click', () => {
+            alert('🦋 ඔයාට සාදරයෙන් පිළිගන්නවා! 🦋');
+        });
     </script>
 
-    <!-- hidden note: email again & everything embedded -->
 </body>
-</html>
+</html>body{
+background: radial-gradient(circle at top,#001a1a,#000000);
+color:#00ff9c;
+font-family: "Courier New", monospace;
+}
+
+/* neon box */
+.box{
+border:2px solid #00ff9c;
+border-radius:15px;
+padding:20px;
+box-shadow:0 0 15px #00ff9c, 0 0 30px #00ff9c inset;
+transition:0.3s;
+}
+
+.box:hover{
+transform:scale(1.03);
+box-shadow:0 0 25px #00ff9c,0 0 40px #00ff9c inset;
+}
+
+/* glowing button */
+.btn{
+background:#00ff9c;
+color:#000;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+font-weight:bold;
+box-shadow:0 0 15px #00ff9c;
+cursor:pointer;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#00ffaa;
+box-shadow:0 0 25px #00ffaa;
+}
+
+/* hacker text animation */
+@keyframes glow{
+0%{text-shadow:0 0 5px #00ff9c;}
+50%{text-shadow:0 0 20px #00ff9c;}
+100%{text-shadow:0 0 5px #00ff9c;}
+}
+
+h1{
+animation:glow 2s infinite;
+}<script>
+var c = document.getElementById("matrix");
+var ctx = c.getContext("2d");
+
+c.height = window.innerHeight;
+c.width = window.innerWidth;
+
+var letters = "01";
+letters = letters.split("");
+
+var font_size = 14;
+var columns = c.width/font_size;
+
+var drops = [];
+for(var x = 0; x < columns; x++)
+drops[x] = 1;
+
+function draw(){
+ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+ctx.fillRect(0, 0, c.width, c.height);
+
+ctx.fillStyle = "#0F0";
+ctx.font = font_size + "px monospace";
+
+for(var i = 0; i < drops.length; i++){
+var text = letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text, i*font_size, drops[i]*font_size);
+
+if(drops[i]*font_size > c.height && Math.random() > 0.975)
+drops[i] = 0;
+
+drops[i]++;
+}
+}
+
+setInterval(draw, 33);
+</script>
